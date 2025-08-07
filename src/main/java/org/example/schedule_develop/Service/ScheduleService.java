@@ -8,6 +8,9 @@ import org.example.schedule_develop.Repository.ScheduleRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
@@ -21,4 +24,10 @@ public class ScheduleService {
         return new ScheduleResponseDto(savedSchedule);
     }
 
+    public List<ScheduleResponseDto> findAll() {
+        return scheduleRepository.findAll()
+                .stream()
+                .map(ScheduleResponseDto::new)
+                .toList();
+    }
 }
