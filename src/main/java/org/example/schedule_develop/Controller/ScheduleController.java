@@ -6,10 +6,9 @@ import org.example.schedule_develop.Dto.ScheduleResponseDto;
 import org.example.schedule_develop.Service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/schedules")
@@ -17,12 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
+    /** 일정 생성 (Lv1) -> CREATE **/
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> save(@RequestBody ScheduleRequestDto requestDto) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto);
 
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
+    }
 
-
+    /** 일정 전체 조회 (Lv1) -> READ **/
+    @GetMapping()
+    public ResponseEntity<List<ScheduleResponseDto>>findAll() {
+        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
+        return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
     }
 }
