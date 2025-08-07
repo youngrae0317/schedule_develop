@@ -270,7 +270,6 @@
 - **Request Body**: 없음
 
 - **Response**: 없음
-```
 
 
 <br>
