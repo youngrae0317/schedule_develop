@@ -13,18 +13,12 @@ import org.springframework.stereotype.Service;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
+    // 일정 생성 비즈니스 로직
     public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
-        Schedule schedule = new Schedule(requestDto.getTitle(), requestDto.getContents(), requestDto.getUserName());
+        Schedule schedule = new Schedule(requestDto);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
-        return new ScheduleResponseDto(
-                savedSchedule.getId(),
-                savedSchedule.getTitle(),
-                savedSchedule.getContents(),
-                savedSchedule.getUserName(),
-                savedSchedule.getCreatedAt(),
-                savedSchedule.getModifiedAt()
-                );
+        return new ScheduleResponseDto(savedSchedule);
     }
 
 }

@@ -1,6 +1,7 @@
 package org.example.schedule_develop.Dto;
 
 import lombok.Getter;
+import org.example.schedule_develop.Entity.Schedule;
 
 import java.time.LocalDateTime;
 
@@ -15,12 +16,12 @@ public class ScheduleResponseDto {
     private final LocalDateTime modifiedAt;
 
 
-    public ScheduleResponseDto(Long id, String title, String contents, String userName, LocalDateTime createdAt, LocalDateTime modifiedAt) {
-        this.id = id;
-        this.title = title;
-        this.contents = contents;
-        this.userName = userName;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
+    public ScheduleResponseDto(Schedule schedule) {
+        this.id = schedule.getId();
+        this.title = schedule.getTitle();
+        this.contents = schedule.getContents();
+        this.userName = schedule.getUserName();
+        this.createdAt = schedule.getCreatedAt();
+        this.modifiedAt = schedule.getModifiedAt();
     }
 }
