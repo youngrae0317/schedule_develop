@@ -25,6 +25,12 @@ public class Schedule extends BaseEntity {
         this.userName = userName;
     }
 
+    public Schedule(ScheduleRequestDto requestDto) {
+        this.userName = requestDto.getUserName();
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+    }
+
     public void scheduleUpdate(ScheduleRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
