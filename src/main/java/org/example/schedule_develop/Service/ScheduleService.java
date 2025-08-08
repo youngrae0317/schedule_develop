@@ -5,7 +5,9 @@ import org.example.schedule_develop.Dto.ScheduleRequestDto;
 import org.example.schedule_develop.Dto.ScheduleResponseDto;
 import org.example.schedule_develop.Dto.ScheduleUpdateRequestDto;
 import org.example.schedule_develop.Entity.Schedule;
+import org.example.schedule_develop.Entity.User;
 import org.example.schedule_develop.Repository.ScheduleRepository;
+import org.example.schedule_develop.Repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     // 일정 생성 비즈니스 로직
     public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
-        Schedule schedule = new Schedule(requestDto);
+        User user = userRepository.findByIdOrElseThrow(requestDto.getId());
+
+        Schedule schedule = new Schedule(requestDto, user);
         Schedule savedSchedule = scheduleRepository.save(schedule);
 
         return new ScheduleResponseDto(savedSchedule);

@@ -4,12 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class ScheduleRequestDto {
-    private String userName;
+    private Long id;
     private String title;
     private String contents;
 
-    public ScheduleRequestDto(String userName, String title, String contents) {
-        this.userName = userName;
+    public ScheduleRequestDto(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
