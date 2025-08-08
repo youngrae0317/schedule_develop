@@ -7,6 +7,7 @@ import org.example.schedule_develop.Dto.UserResponseDto;
 import org.example.schedule_develop.Entity.User;
 import org.example.schedule_develop.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class UserService {
         return new UserResponseDto(findUser);
     }
 
+    @Transactional
     public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
         User findUser = userRepository.findByIdOrElseThrow(id);
 

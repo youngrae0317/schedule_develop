@@ -16,20 +16,18 @@ public class Schedule extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
-    private String userName;
     private String title;
     private String contents;
 
-    public Schedule(String title, String contents, String userName) {
-        this.title = title;
-        this.contents = contents;
-        this.userName = userName;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Schedule(ScheduleRequestDto requestDto) {
-        this.userName = requestDto.getUserName();
+
+    public Schedule(ScheduleRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+        this.user = user;
     }
 
     public void scheduleUpdate(ScheduleUpdateRequestDto requestDto) {
