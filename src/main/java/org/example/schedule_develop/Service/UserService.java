@@ -41,6 +41,12 @@ public class UserService {
         findUser.userUpdate(requestDto);
 
         return new UserResponseDto(findUser);
+    }
+
+    public void deleteUser(Long id) {
+        User user =  userRepository.findByIdOrElseThrow(id);
+
+        userRepository.delete(user);
 
     }
 }
