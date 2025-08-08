@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.schedule_develop.Dto.ScheduleRequestDto;
+import org.example.schedule_develop.Dto.ScheduleUpdateRequestDto;
 
 @Getter
 @Entity
@@ -31,7 +32,7 @@ public class Schedule extends BaseEntity {
         this.contents = requestDto.getContents();
     }
 
-    public void scheduleUpdate(ScheduleRequestDto requestDto) {
+    public void scheduleUpdate(ScheduleUpdateRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
     }
