@@ -1,10 +1,9 @@
-package org.example.schedule_develop.Dto;
+package org.example.schedule_develop.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import org.example.schedule_develop.Entity.User;
 
 @Getter
 public class LoginRequestDto {

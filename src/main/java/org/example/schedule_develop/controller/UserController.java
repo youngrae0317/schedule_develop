@@ -1,12 +1,12 @@
-package org.example.schedule_develop.Controller;
+package org.example.schedule_develop.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.example.schedule_develop.Dto.LoginRequestDto;
-import org.example.schedule_develop.Dto.UserRequestDto;
-import org.example.schedule_develop.Dto.UserResponseDto;
-import org.example.schedule_develop.Service.UserService;
+import org.example.schedule_develop.dto.LoginRequestDto;
+import org.example.schedule_develop.dto.UserRequestDto;
+import org.example.schedule_develop.dto.UserResponseDto;
+import org.example.schedule_develop.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

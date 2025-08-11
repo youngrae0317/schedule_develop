@@ -1,11 +1,10 @@
-package org.example.schedule_develop.Entity;
+package org.example.schedule_develop.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.example.schedule_develop.Dto.ScheduleRequestDto;
-import org.example.schedule_develop.Dto.ScheduleUpdateRequestDto;
+import org.example.schedule_develop.dto.ScheduleRequestDto;
+import org.example.schedule_develop.dto.ScheduleUpdateRequestDto;
 
 @Getter
 @Entity

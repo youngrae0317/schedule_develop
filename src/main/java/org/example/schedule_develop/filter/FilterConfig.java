@@ -1,4 +1,4 @@
-package org.example.schedule_develop.Filter;
+package org.example.schedule_develop.filter;
 
 import jakarta.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
