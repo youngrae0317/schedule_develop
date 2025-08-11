@@ -1,6 +1,7 @@
 package org.example.schedule_develop.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.schedule_develop.Dto.LoginRequestDto;
 import org.example.schedule_develop.Dto.ScheduleResponseDto;
 import org.example.schedule_develop.Dto.UserRequestDto;
 import org.example.schedule_develop.Dto.UserResponseDto;
@@ -49,6 +50,22 @@ public class UserService {
         User user =  userRepository.findByIdOrElseThrow(id);
 
         userRepository.delete(user);
+
+    }
+
+    @Transactional(readOnly = true)
+    public void login(LoginRequestDto requestDto) {
+        String email = requestDto.getEmail();
+        String password = requestDto.getPassword();
+
+        // 사용자 확인 로직
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("user not found.")
+        );
+
+        if (!user.getPassword().equals(password)) {
+            throw new  IllegalArgumentException("invalid password.");
+        }
 
     }
 }

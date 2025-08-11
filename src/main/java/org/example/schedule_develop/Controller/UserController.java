@@ -1,5 +1,7 @@
 package org.example.schedule_develop.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.schedule_develop.Dto.UserRequestDto;
 import org.example.schedule_develop.Dto.UserResponseDto;
@@ -60,5 +62,33 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    /**
+     * 로그인 -> POST
+     **/
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
+        // 신규 세션 생성 ,JSESSIONID 쿠키
+        HttpSession session = request.getSession();
+        session.setAttribute("LOGIN_USER", requestDto.getEmail());
+
+        return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+    }
+
+    /**
+     * 로그아웃 -> POST
+     **/
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        // 로그인하지 않으면 HttpSession이 null로 반환된다.
+        HttpSession session = request.getSession(false);
+        // 세션이 존재하면 -> 로그인이 된 경우
+        if (session != null) {
+            session.invalidate(); // 해당 세션(데이터)을 삭제한다.
+        }
+
+        return new ResponseEntity<>("로그아웃 성공", HttpStatus.OK);
     }
 }
