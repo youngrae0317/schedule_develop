@@ -3,6 +3,7 @@ package org.example.schedule_develop.Controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.example.schedule_develop.Dto.LoginRequestDto;
 import org.example.schedule_develop.Dto.UserRequestDto;
 import org.example.schedule_develop.Dto.UserResponseDto;
 import org.example.schedule_develop.Service.UserService;
@@ -69,7 +70,9 @@ public class UserController {
      * 로그인 -> POST
      **/
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserRequestDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletRequest request) {
+        userService.login(requestDto);
+
         // 신규 세션 생성 ,JSESSIONID 쿠키
         HttpSession session = request.getSession();
         session.setAttribute("LOGIN_USER", requestDto.getEmail());
