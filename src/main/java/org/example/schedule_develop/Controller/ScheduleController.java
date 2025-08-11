@@ -21,8 +21,10 @@ public class ScheduleController {
      * 일정 생성 (Lv1) -> CREATE
      **/
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> save(@RequestBody ScheduleRequestDto requestDto) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto);
+    public ResponseEntity<ScheduleResponseDto> save(
+            @RequestBody ScheduleRequestDto requestDto,
+            @SessionAttribute("LOGIN_USER") String email) {
+        ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto, email);
 
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
     }

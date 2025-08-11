@@ -8,12 +8,10 @@ import org.example.schedule_develop.Entity.Schedule;
 import org.example.schedule_develop.Entity.User;
 import org.example.schedule_develop.Repository.ScheduleRepository;
 import org.example.schedule_develop.Repository.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +20,10 @@ public class ScheduleService {
     private final UserRepository userRepository;
 
     // 일정 생성 비즈니스 로직
-    public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
-        User user = userRepository.findByIdOrElseThrow(requestDto.getId());
+    public ScheduleResponseDto save(ScheduleRequestDto requestDto, String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() ->
+                new IllegalArgumentException("해당 사용자가 없습니다.")
+        );
 
         Schedule schedule = new Schedule(requestDto, user);
         Schedule savedSchedule = scheduleRepository.save(schedule);
