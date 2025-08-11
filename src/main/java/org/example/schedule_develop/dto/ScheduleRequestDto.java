@@ -6,9 +6,10 @@ import lombok.Getter;
 @Getter
 public class ScheduleRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "제목은 필수입니다.")
     @Size(min = 1, max = 10, message = "1자 이상 및 10자 이내여야 합니다.")
     private String title;
+
 
     private String contents;
 

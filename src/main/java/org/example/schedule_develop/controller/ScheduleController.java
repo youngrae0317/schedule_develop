@@ -1,5 +1,6 @@
 package org.example.schedule_develop.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.schedule_develop.dto.ScheduleRequestDto;
 import org.example.schedule_develop.dto.ScheduleResponseDto;
@@ -7,6 +8,7 @@ import org.example.schedule_develop.dto.ScheduleUpdateRequestDto;
 import org.example.schedule_develop.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class ScheduleController {
      **/
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> save(
-            @RequestBody ScheduleRequestDto requestDto,
+            @Valid @RequestBody ScheduleRequestDto requestDto,
             @SessionAttribute("LOGIN_USER") String email) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.save(requestDto, email);
 
@@ -53,7 +55,7 @@ public class ScheduleController {
      * 일정 수정 (Lv1) -> UPDATE
      **/
     @PutMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@RequestBody ScheduleUpdateRequestDto requestDto,
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@Valid @RequestBody ScheduleUpdateRequestDto requestDto,
                                                               @PathVariable Long scheduleId,
                                                               @SessionAttribute("LOGIN_USER") String email) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(scheduleId, requestDto, email);

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.example.schedule_develop.dto.ScheduleRequestDto;
 import org.example.schedule_develop.dto.ScheduleUpdateRequestDto;
 
+
 @Getter
 @Entity
 @NoArgsConstructor

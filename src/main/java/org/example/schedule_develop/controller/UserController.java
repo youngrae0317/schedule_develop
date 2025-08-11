@@ -2,6 +2,7 @@ package org.example.schedule_develop.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.schedule_develop.dto.LoginRequestDto;
 import org.example.schedule_develop.dto.UserRequestDto;
@@ -9,6 +10,7 @@ import org.example.schedule_develop.dto.UserResponseDto;
 import org.example.schedule_develop.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class UserController {
      * 유저 생성 (Lv2) -> CREATE
      **/
     @PostMapping
-    public ResponseEntity<UserResponseDto> save(@RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto requestDto) {
         UserResponseDto userResponseDto = userService.saveUser(requestDto);
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
@@ -51,7 +53,7 @@ public class UserController {
      * 유저 수정 (Lv2) -> UPDATE
      **/
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto) {
         UserResponseDto updateUserResponseDto = userService.updateUser(id, requestDto);
         return new ResponseEntity<>(updateUserResponseDto, HttpStatus.OK);
     }
@@ -70,7 +72,7 @@ public class UserController {
      * 로그인 -> POST
      **/
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDto requestDto, HttpServletRequest request) {
+    public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request) {
         userService.login(requestDto);
 
         // 신규 세션 생성 ,JSESSIONID 쿠키
