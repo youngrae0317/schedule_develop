@@ -1,4 +1,4 @@
-package org.example.schedule_develop.Entity;
+package org.example.schedule_develop.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.schedule_develop.Dto.UserRequestDto;
+import org.example.schedule_develop.dto.UserRequestDto;
 
 @Entity
 @NoArgsConstructor

@@ -1,12 +1,11 @@
-package org.example.schedule_develop.Service;
+package org.example.schedule_develop.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.schedule_develop.Dto.LoginRequestDto;
-import org.example.schedule_develop.Dto.ScheduleResponseDto;
-import org.example.schedule_develop.Dto.UserRequestDto;
-import org.example.schedule_develop.Dto.UserResponseDto;
-import org.example.schedule_develop.Entity.User;
-import org.example.schedule_develop.Repository.UserRepository;
+import org.example.schedule_develop.dto.LoginRequestDto;
+import org.example.schedule_develop.dto.UserRequestDto;
+import org.example.schedule_develop.dto.UserResponseDto;
+import org.example.schedule_develop.entity.User;
+import org.example.schedule_develop.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

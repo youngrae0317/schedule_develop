@@ -1,4 +1,4 @@
-package org.example.schedule_develop.Dto;
+package org.example.schedule_develop.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;

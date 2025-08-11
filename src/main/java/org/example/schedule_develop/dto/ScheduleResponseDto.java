@@ -1,7 +1,7 @@
-package org.example.schedule_develop.Dto;
+package org.example.schedule_develop.dto;
 
 import lombok.Getter;
-import org.example.schedule_develop.Entity.Schedule;
+import org.example.schedule_develop.entity.Schedule;
 
 import java.time.LocalDateTime;
 
