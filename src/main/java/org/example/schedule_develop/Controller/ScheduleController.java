@@ -53,8 +53,10 @@ public class ScheduleController {
      * 일정 수정 (Lv1) -> UPDATE
      **/
     @PutMapping("/{scheduleId}")
-    public ResponseEntity<ScheduleResponseDto> updateSchedule(@RequestBody ScheduleUpdateRequestDto requestDto, @PathVariable Long scheduleId) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(scheduleId, requestDto);
+    public ResponseEntity<ScheduleResponseDto> updateSchedule(@RequestBody ScheduleUpdateRequestDto requestDto,
+                                                              @PathVariable Long scheduleId,
+                                                              @SessionAttribute("LOGIN_USER") String email) {
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(scheduleId, requestDto, email);
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
     }
 
@@ -62,8 +64,9 @@ public class ScheduleController {
      * 일정 삭제 (Lv1) -> DELETE
      **/
     @DeleteMapping("/{scheduleId}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId) {
-        scheduleService.deleteSchedule(scheduleId);
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long scheduleId,
+                                               @SessionAttribute("LOGIN_USER") String email) {
+        scheduleService.deleteSchedule(scheduleId, email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -8,7 +8,7 @@
 
 | Method | Endpoint        | Description | Parameters | Status Code   |
 |:-------|:----------------|:------------|:-----------|:--------------|
-| `POST` | `/users/signup` | 회원 가입       | 없음         | `201 CREATED` |
+| `POST` | `/users` | 회원 가입       | 없음         | `201 CREATED` |
 
 - **Request Body**
 

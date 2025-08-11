@@ -18,6 +18,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public UserResponseDto saveUser(UserRequestDto requestDto) {
         User user = new User(requestDto);
         User savedUser = userRepository.save(user);
@@ -25,6 +26,7 @@ public class UserService {
         return new UserResponseDto(savedUser);
     }
 
+    @Transactional(readOnly = true)
     public List<UserResponseDto> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -32,6 +34,7 @@ public class UserService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public UserResponseDto findById(Long id) {
         User findUser = userRepository.findByIdOrElseThrow(id);
         return new UserResponseDto(findUser);
@@ -46,6 +49,7 @@ public class UserService {
         return new UserResponseDto(findUser);
     }
 
+    @Transactional
     public void deleteUser(Long id) {
         User user =  userRepository.findByIdOrElseThrow(id);
 
@@ -60,11 +64,11 @@ public class UserService {
 
         // 사용자 확인 로직
         User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new IllegalArgumentException("user not found.")
+                () -> new IllegalArgumentException("해당 사용자가 없습니다.")
         );
 
         if (!user.getPassword().equals(password)) {
-            throw new  IllegalArgumentException("invalid password.");
+            throw new  IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
 
     }
