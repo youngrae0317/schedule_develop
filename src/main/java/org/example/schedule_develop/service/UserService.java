@@ -1,6 +1,7 @@
 package org.example.schedule_develop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.schedule_develop.config.PasswordEncoder;
 import org.example.schedule_develop.dto.LoginRequestDto;
 import org.example.schedule_develop.dto.UserRequestDto;
 import org.example.schedule_develop.dto.UserResponseDto;
@@ -16,10 +17,14 @@ import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public UserResponseDto saveUser(UserRequestDto requestDto) {
-        User user = new User(requestDto);
+        String password = requestDto.getPassword();
+        String encodePwd = passwordEncoder.encode(password);
+
+        User user = new User(requestDto, encodePwd);
         User savedUser = userRepository.save(user);
 
         return new UserResponseDto(savedUser);
@@ -66,7 +71,7 @@ public class UserService {
                 () -> new IllegalArgumentException("해당 사용자가 없습니다.")
         );
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new  IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
 
