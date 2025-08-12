@@ -21,10 +21,10 @@ public class User extends BaseEntity {
     private String email;
     private String password;
 
-    public User(UserRequestDto requestDto) {
+    public User(UserRequestDto requestDto, String password) {
         this.userName = requestDto.getUserName();
         this.email = requestDto.getEmail();
-        this.password = requestDto.getPassword();
+        this.password = password;
     }
 
     public void userUpdate(UserRequestDto requestDto) {
