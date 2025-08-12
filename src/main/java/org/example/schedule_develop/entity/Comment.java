@@ -3,6 +3,7 @@ package org.example.schedule_develop.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.schedule_develop.dto.CommentRequestDto;
 
 @Getter
 @NoArgsConstructor
@@ -24,8 +25,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
-    public Comment(String contents, User user, Schedule schedule) {
-        this.contents = contents;
+    public Comment(CommentRequestDto requestDto, User user, Schedule schedule) {
+        this.contents = requestDto.getContents();
         this.user = user;
         this.schedule = schedule;
     }
