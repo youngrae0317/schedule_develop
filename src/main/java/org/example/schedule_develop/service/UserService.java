@@ -25,6 +25,12 @@ public class UserService {
         String encodePwd = passwordEncoder.encode(password);
 
         User user = new User(requestDto, encodePwd);
+
+        // 이메일 중복 확인 로직 추가
+        userRepository.findByEmail(user.getEmail()).ifPresent(m -> {
+            throw new IllegalStateException("이미 존재하는 이메일입니다.");
+        });
+
         User savedUser = userRepository.save(user);
 
         return new UserResponseDto(savedUser);
@@ -47,6 +53,12 @@ public class UserService {
     @Transactional
     public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
         User findUser = findUserById(id);
+
+        // 비밀번호 인증 로직 추가..! (이전에는 비밀번호가 달라도 유저 정보 수정 가능)
+        if (!passwordEncoder.matches(requestDto.getPassword(), findUser.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
 
         findUser.userUpdate(requestDto);
 
