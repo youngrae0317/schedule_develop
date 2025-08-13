@@ -3,6 +3,7 @@ package org.example.schedule_develop.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.schedule_develop.dto.CommentRequestDto;
 import org.example.schedule_develop.dto.CommentResponseDto;
+import org.example.schedule_develop.entity.Comment;
 import org.example.schedule_develop.service.CommentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,4 +34,16 @@ public class CommentController {
         List<CommentResponseDto> commentResponseDtoList = commentService.getComments(scheduleId);
         return new ResponseEntity<>(commentResponseDtoList,HttpStatus.OK);
     }
+
+    /**
+     * 댓글 수정 (Lv7) -> PUT
+     **/
+    @PutMapping("/comments/{commentId}")
+    public ResponseEntity<CommentResponseDto>  updateComment(@RequestBody CommentRequestDto commentRequestDto,
+                                                             @PathVariable Long commentId) {
+        CommentResponseDto commentResponseDto = commentService.updateComment(commentId, commentRequestDto);
+        return new ResponseEntity<>(commentResponseDto,HttpStatus.OK);
+    }
+
+
 }

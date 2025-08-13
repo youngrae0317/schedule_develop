@@ -49,4 +49,16 @@ public class CommentService {
                 .toList();
 
     }
+
+    @Transactional
+    public CommentResponseDto updateComment(Long commentId, CommentRequestDto requestDto) {
+        // 댓글 존재하는지 확인
+        Comment findComment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 없습니다."));
+
+        // 존재하면 수정
+        findComment.updateComment(requestDto);
+
+        return new CommentResponseDto(findComment);
+    }
 }
