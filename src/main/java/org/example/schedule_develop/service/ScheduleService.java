@@ -1,13 +1,19 @@
 package org.example.schedule_develop.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.schedule_develop.dto.SchedulePageResponseDto;
 import org.example.schedule_develop.dto.ScheduleRequestDto;
 import org.example.schedule_develop.dto.ScheduleResponseDto;
 import org.example.schedule_develop.dto.ScheduleUpdateRequestDto;
 import org.example.schedule_develop.entity.Schedule;
 import org.example.schedule_develop.entity.User;
+import org.example.schedule_develop.repository.CommentRepository;
 import org.example.schedule_develop.repository.ScheduleRepository;
 import org.example.schedule_develop.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +24,7 @@ import java.util.List;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
 
     // 일정 생성 비즈니스 로직
@@ -34,11 +41,20 @@ public class ScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public List<ScheduleResponseDto> findAll() {
-        return scheduleRepository.findAll()
-                .stream()
-                .map(ScheduleResponseDto::new)
-                .toList();
+    public Page<SchedulePageResponseDto> findAll(int page, int size) {
+
+        // modifiedAt 기준으로 내림차순, 페이지 번호와 페이지 크기, 정렬 기준을 담아 Pageble 객체 생성
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "modifiedAt"));
+
+        // Repository에 pageble 객체 전달 후 Page<Schedule> 받기
+        Page<Schedule> schedulePage = scheduleRepository.findAll(pageable);
+
+        return schedulePage.map(schedule -> {
+            // 각 일정(schedule)에 대한 댓글 개수를 조회
+            int commentCount = commentRepository.countBySchedule_ScheduleId(schedule.getScheduleId());
+            // schedule과 commentCount를 함께 넘겨 DTO 생성
+            return new SchedulePageResponseDto(schedule, commentCount);
+        });
     }
 
     @Transactional(readOnly = true)
