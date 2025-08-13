@@ -37,8 +37,8 @@ public class ScheduleController {
      * 일정 전체 조회 (Lv1) -> READ
      **/
     @GetMapping()
-    public ResponseEntity<Page<SchedulePageResponseDto>> findAll(@RequestParam int page,
-                                                                 @RequestParam int size) {
+    public ResponseEntity<Page<SchedulePageResponseDto>> findAll(@RequestParam(defaultValue = "0") int page,
+                                                                 @RequestParam(defaultValue = "10") int size) {
         Page<SchedulePageResponseDto> schedulePage = scheduleService.findAll(page, size);
         return new ResponseEntity<>(schedulePage, HttpStatus.OK);
     }
