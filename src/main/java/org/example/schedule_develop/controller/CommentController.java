@@ -40,10 +40,10 @@ public class CommentController {
      **/
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<CommentResponseDto>  updateComment(@RequestBody CommentRequestDto commentRequestDto,
-                                                             @PathVariable Long commentId) {
-        CommentResponseDto commentResponseDto = commentService.updateComment(commentId, commentRequestDto);
+                                                             @PathVariable Long commentId,
+                                                             @SessionAttribute("LOGIN_USER") String email) {
+        CommentResponseDto commentResponseDto = commentService.updateComment(commentId, commentRequestDto, email);
         return new ResponseEntity<>(commentResponseDto,HttpStatus.OK);
     }
-
 
 }
