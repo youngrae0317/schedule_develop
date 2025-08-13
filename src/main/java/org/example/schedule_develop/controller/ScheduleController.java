@@ -2,10 +2,12 @@ package org.example.schedule_develop.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.schedule_develop.dto.SchedulePageResponseDto;
 import org.example.schedule_develop.dto.ScheduleRequestDto;
 import org.example.schedule_develop.dto.ScheduleResponseDto;
 import org.example.schedule_develop.dto.ScheduleUpdateRequestDto;
 import org.example.schedule_develop.service.ScheduleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,9 +37,10 @@ public class ScheduleController {
      * 일정 전체 조회 (Lv1) -> READ
      **/
     @GetMapping()
-    public ResponseEntity<List<ScheduleResponseDto>> findAll() {
-        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
-        return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
+    public ResponseEntity<Page<SchedulePageResponseDto>> findAll(@RequestParam int page,
+                                                                 @RequestParam int size) {
+        Page<SchedulePageResponseDto> schedulePage = scheduleService.findAll(page, size);
+        return new ResponseEntity<>(schedulePage, HttpStatus.OK);
     }
 
     /**
