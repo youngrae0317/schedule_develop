@@ -30,9 +30,7 @@ public class ScheduleService {
     // 일정 생성 비즈니스 로직
     @Transactional
     public ScheduleResponseDto save(ScheduleRequestDto requestDto, String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() ->
-                new IllegalArgumentException("해당 사용자가 없습니다.")
-        );
+        User user = findUserByEmail(email);
 
         Schedule schedule = new Schedule(requestDto, user);
         Schedule savedSchedule = scheduleRepository.save(schedule);
@@ -59,18 +57,19 @@ public class ScheduleService {
 
     @Transactional(readOnly = true)
     public ScheduleResponseDto findById(Long id) {
-        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        Schedule findSchedule = scheduleRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
         return new ScheduleResponseDto(findSchedule);
     }
 
     @Transactional
     public ScheduleResponseDto updateSchedule(Long id, ScheduleUpdateRequestDto requestDto, String email) {
         // 현재 로그인한 사용자 정보 가져오기
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new IllegalArgumentException("해당 사용자가 없습니다."));
+        User user = findUserByEmail(email);
 
         // 해당 일정 조회
-        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        Schedule findSchedule = scheduleRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
 
         // 일정 소유주 확인
         if (!findSchedule.getUser().getId().equals(user.getId())) {
@@ -84,11 +83,11 @@ public class ScheduleService {
     @Transactional
     public void deleteSchedule(Long id, String email) {
         // 현재 로그인한 사용자 정보 가져오기
-        User user = userRepository.findByEmail(email).orElseThrow(
-                () -> new IllegalArgumentException("해당 사용자가 없습니다."));
+        User user = findUserByEmail(email);
 
         // 해당 일정 조회
-        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        Schedule findSchedule = scheduleRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
 
         // 일정 소유주 확인
         if (!findSchedule.getUser().getId().equals(user.getId())) {
@@ -96,5 +95,12 @@ public class ScheduleService {
         }
 
         scheduleRepository.delete(findSchedule);
+    }
+
+    // 중복 메소드 반복되므로 이메일로 유저 찾는 메소드 분리
+    private User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() ->
+                new IllegalArgumentException("해당 사용자가 없습니다.")
+        );
     }
 }

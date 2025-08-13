@@ -7,7 +7,6 @@ import lombok.Getter;
 public class UserRequestDto {
 
     @NotBlank(message = "사용자명은 필수입니다.")
-    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "영어 알파벳과 숫자만 입력할 수 있습니다.")
     @Size(min = 1, max = 10)
     private String userName;
 
