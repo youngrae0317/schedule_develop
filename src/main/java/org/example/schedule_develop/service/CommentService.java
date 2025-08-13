@@ -71,4 +71,23 @@ public class CommentService {
 
         return new CommentResponseDto(findComment);
     }
+
+    @Transactional
+    public void deleteComment(Long commentId, String email) {
+        // 현재 로그인한 사용자 정보 조회
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("인증되지 않은 사용자입니다."));
+
+        // 삭제 댓글 조회
+        Comment findComment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 없습니다"));
+
+        // 댓글 작성자와 현재 로그인한 사용자가 동일한지 확인
+        if (!findComment.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("댓글을 삭제할 권한이 없습니다.");
+        }
+
+        // 댓글 삭제
+        commentRepository.delete(findComment);
+    }
 }
