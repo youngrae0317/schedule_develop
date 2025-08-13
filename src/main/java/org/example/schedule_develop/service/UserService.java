@@ -40,13 +40,13 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponseDto findById(Long id) {
-        User findUser = userRepository.findByIdOrElseThrow(id);
+        User findUser = findUserById(id);
         return new UserResponseDto(findUser);
     }
 
     @Transactional
     public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
-        User findUser = userRepository.findByIdOrElseThrow(id);
+        User findUser = findUserById(id);
 
         findUser.userUpdate(requestDto);
 
@@ -55,7 +55,7 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long id) {
-        User user =  userRepository.findByIdOrElseThrow(id);
+        User user = findUserById(id);
 
         userRepository.delete(user);
 
@@ -72,8 +72,13 @@ public class UserService {
         );
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new  IllegalArgumentException("비밀번호가 틀렸습니다.");
+            throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
 
+    }
+
+    private User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 유저가 없습니다."));
     }
 }

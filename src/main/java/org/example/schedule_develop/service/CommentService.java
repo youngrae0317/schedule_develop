@@ -25,7 +25,8 @@ public class CommentService {
     @Transactional
     public CommentResponseDto createComment(Long scheduleId, CommentRequestDto requestDto, String email) {
         // 일정 존재 하는지 확인
-        Schedule schedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() ->
+                new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
 
         // 현재 로그인 중인 사용자 정보 조회
         User user = userRepository.findByEmail(email).orElseThrow(() ->
@@ -41,7 +42,8 @@ public class CommentService {
     @Transactional(readOnly = true)
     public List<CommentResponseDto> getComments(Long scheduleId) {
         // 일정 존재하는지 확인
-        scheduleRepository.findByIdOrElseThrow(scheduleId);
+        scheduleRepository.findById(scheduleId).orElseThrow(() ->
+                new IllegalArgumentException("해당 일정을 찾을 수 없습니다."));
 
         // 댓글 목록 조회 및 DTO 변환 후 반환
         return commentRepository.findAllBySchedule_ScheduleId(scheduleId)
