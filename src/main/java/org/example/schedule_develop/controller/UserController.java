@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * 유저 수정 (Lv2) -> DELETE
+     * 유저 삭제 (Lv2) -> DELETE
      **/
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

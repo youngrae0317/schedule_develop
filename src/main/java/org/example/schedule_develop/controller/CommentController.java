@@ -46,4 +46,13 @@ public class CommentController {
         return new ResponseEntity<>(commentResponseDto,HttpStatus.OK);
     }
 
+    /**
+     * 댓글 삭제 (Lv7) -> PUT
+     **/
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId,
+                                              @SessionAttribute("LOGIN_USER") String email) {
+        commentService.deleteComment(commentId, email);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
